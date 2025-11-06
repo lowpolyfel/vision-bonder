@@ -20,7 +20,7 @@ La aplicación principal se inicia desde [`main.py`](main.py) y crea una instanc
 - [`video/motion.py`](video/motion.py): inicializa y actualiza el fondo adaptativo y devuelve contornos relevantes.
 - [`services/state_machine.py`](services/state_machine.py): máquina de estados que aplica la tolerancia a IDLE y dispara callbacks al cerrar un tramo.
 - [`services/event_recorder.py`](services/event_recorder.py): traduce los segmentos a estatus binarios y llama a [`db/manager.py`](db/manager.py) para persistirlos en MySQL.
-- [`config/settings.py`](config/settings.py): parámetros globales (por ejemplo, tolerancia, dimensiones y credenciales de base de datos).
+- [`config/settings.py`](config/settings.py): parámetros globales (por ejemplo, tolerancia, dimensiones y variables de entorno de la base de datos).
 
 Además, `utils/file_dialog.py` gestiona la selección de archivos de video con soporte para mayúsculas/minúsculas en sistemas Linux.
 
@@ -54,7 +54,9 @@ source .venv/bin/activate  # En Windows: .venv\Scripts\activate
 pip install -r requirements.txt  # Añada -r requirements-dev.txt para scripts experimentales
 
 # 3) Configurar credenciales de base de datos
-edite config/settings.py según su entorno
+cp .venv.example .env  # archivo ignorado por git con las variables necesarias
+# edite .env y expórtelo en su shell (ejemplo para Bash)
+set -a; source .env; set +a
 
 # 4) Ejecutar la aplicación
 python main.py
@@ -63,6 +65,19 @@ python main.py
 > 💡 Si ejecuta la aplicación en un dispositivo sin pantalla (por ejemplo, un servidor), recuerde que Tkinter requiere un entorno gráfico.
 
 ## 🗃 Configuración de base de datos
+
+Las credenciales y parámetros sensibles se obtienen desde variables de entorno. Consulte `.venv.example` para ver todos los nombres esperados:
+
+| Variable | Descripción |
+| --- | --- |
+| `VISION_BONDER_DB_HOST` | Host o IP del servidor MySQL. |
+| `VISION_BONDER_DB_PORT` | Puerto TCP (opcional, por defecto 3306). |
+| `VISION_BONDER_DB_USER` | Usuario con permisos de inserción en las tablas objetivo. |
+| `VISION_BONDER_DB_PASSWORD` | Contraseña del usuario anterior. |
+| `VISION_BONDER_DB_NAME` | Base de datos donde residen `operacion_maquina` y `estado_maquina`. |
+| `VISION_BONDER_MACHINE_ID` | Identificador numérico de la máquina monitoreada. |
+
+> ℹ️ El repositorio no incluye contraseñas ni datos reales; cada despliegue debe definir sus propios valores antes de ejecutar la aplicación.
 
 El proyecto asume la existencia de las siguientes tablas en el esquema definido por `DB_CONFIG`:
 
