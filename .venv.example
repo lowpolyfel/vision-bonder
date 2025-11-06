@@ -1,0 +1,9 @@
+# Variables de entorno requeridas por Vision Bonder.
+# Copia este archivo a `.env` (o exporta manualmente las variables)
+# y reemplaza los valores por los de tu entorno antes de ejecutar la app.
+VISION_BONDER_DB_HOST=127.0.0.1
+VISION_BONDER_DB_PORT=3306
+VISION_BONDER_DB_USER=tu_usuario
+VISION_BONDER_DB_PASSWORD=tu_contrasena
+VISION_BONDER_DB_NAME=vision_bonder
+VISION_BONDER_MACHINE_ID=1

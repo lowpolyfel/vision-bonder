@@ -1,0 +1,5 @@
+-r requirements.txt
+ultralytics>=8.0
+pytest>=7.4
+black>=24.0
+flake8>=6.1

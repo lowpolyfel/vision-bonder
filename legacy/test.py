@@ -6,19 +6,16 @@ from PIL import Image, ImageTk
 import mysql.connector
 from datetime import datetime, timedelta
 
-# ===================== Configuración =====================
-TOLERANCIA_IDLE_SEGUNDOS = 30
-AREA_MINIMA_CONTORNO = 500
-VIDEO_ANCHO_DISPLAY = 640
+from config.settings import (
+    AREA_MINIMA_CONTORNO,
+    DB_CONFIG,
+    ID_MAQUINA_MONITOREADA,
+    TOLERANCIA_IDLE_SEGUNDOS,
+    VIDEO_ANCHO_DISPLAY,
+)
 
-# --- Base de datos ---
-DB_CONFIG = {
-    'host': "127.0.0.1",
-    'user': "fel",
-    'password': "feli123",
-    'database': "wb_db"
-}
-ID_MAQUINA_MONITOREADA = 1
+# ===================== Configuración =====================
+# Ver config/settings.py para parámetros compartidos y variables de entorno.
 
 # =========================================================
 class DBManager:
