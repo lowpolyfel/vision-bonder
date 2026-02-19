@@ -110,6 +110,17 @@ monitoreo/
 └── main.py            # Punto de entrada principal
 ```
 
+
+## 🌐 Apartado web (ASP.NET Core / Blazor)
+
+Si necesitas integrar carga y gestión de documentos en una web existente, se añadió un módulo reutilizable en `web/DocumentosModule/` con:
+
+- API para subir/listar documentos y asignar un número de referencia.
+- Página Blazor (`/documentos`) para cargar, visualizar y asignar números.
+- Extensión de servicios para integrarlo rápidamente en `Program.cs`.
+
+Consulta la guía en [`web/DocumentosModule/README.md`](web/DocumentosModule/README.md).
+
 ## 🤝 Contribuir
 
 Revise las pautas en [`CONTRIBUTING.md`](CONTRIBUTING.md) antes de proponer cambios. Se fomenta el uso de _pull requests_ bien documentados, pruebas reproducibles y linters como `flake8` o `black` para mantener la calidad del código.

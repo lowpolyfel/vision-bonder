@@ -1,0 +1,101 @@
+@page "/documentos"
+@using System.Net.Http.Json
+@inject HttpClient Http
+
+<h3>Gestión de documentos</h3>
+
+<div class="mb-3">
+    <InputFile OnChange="SubirArchivoAsync" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" />
+</div>
+
+@if (!string.IsNullOrWhiteSpace(_mensaje))
+{
+    <div class="alert alert-info">@_mensaje</div>
+}
+
+@if (_documentos.Count == 0)
+{
+    <p>No hay documentos cargados.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Documento</th>
+                <th>Vista previa</th>
+                <th>Número asignado</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var doc in _documentos)
+            {
+                <tr>
+                    <td>@doc.NombreOriginal</td>
+                    <td>
+                        <a href="@doc.RutaRelativa" target="_blank">Abrir</a>
+                    </td>
+                    <td>
+                        <InputNumber @bind-Value="doc.NumeroAsignado" class="form-control" />
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => AsignarNumeroAsync(doc)">Guardar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private string? _mensaje;
+    private List<DocumentoDto> _documentos = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RecargarAsync();
+    }
+
+    private async Task SubirArchivoAsync(InputFileChangeEventArgs eventArgs)
+    {
+        var archivo = eventArgs.File;
+        using var content = new MultipartFormDataContent();
+        await using var stream = archivo.OpenReadStream(maxAllowedSize: 20 * 1024 * 1024);
+        content.Add(new StreamContent(stream), "archivo", archivo.Name);
+
+        var response = await Http.PostAsync("api/documentos/subir", content);
+        _mensaje = response.IsSuccessStatusCode
+            ? "Documento subido correctamente."
+            : "No fue posible subir el documento.";
+
+        await RecargarAsync();
+    }
+
+    private async Task AsignarNumeroAsync(DocumentoDto documento)
+    {
+        if (documento.NumeroAsignado is null)
+        {
+            _mensaje = "Debes ingresar un número para asignar.";
+            return;
+        }
+
+        var response = await Http.PutAsJsonAsync($"api/documentos/{documento.Id}/asignar-numero", new { Numero = documento.NumeroAsignado.Value });
+        _mensaje = response.IsSuccessStatusCode
+            ? "Número asignado exitosamente."
+            : "No fue posible asignar el número.";
+    }
+
+    private async Task RecargarAsync()
+    {
+        _documentos = await Http.GetFromJsonAsync<List<DocumentoDto>>("api/documentos") ?? [];
+    }
+
+    private sealed class DocumentoDto
+    {
+        public Guid Id { get; set; }
+        public string NombreOriginal { get; set; } = string.Empty;
+        public string RutaRelativa { get; set; } = string.Empty;
+        public int? NumeroAsignado { get; set; }
+    }
+}
