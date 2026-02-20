@@ -1,0 +1,31 @@
+@page
+@model RpeEppWeb.Pages.Workers.CreateModel
+@{
+    ViewData["Title"] = "Registrar trabajador";
+}
+
+<h1 class="h3">Registrar trabajador</h1>
+
+<form method="post" enctype="multipart/form-data" class="card card-body">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Input.Nombre" class="form-label"></label>
+        <input asp-for="Input.Nombre" class="form-control" />
+        <span asp-validation-for="Input.Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Input.Rpe" class="form-label"></label>
+        <input asp-for="Input.Rpe" class="form-control text-uppercase" maxlength="5" />
+        <span asp-validation-for="Input.Rpe" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Input.Foto" class="form-label"></label>
+        <input asp-for="Input.Foto" class="form-control" accept=".jpg,.jpeg,.png,.webp" />
+        <span asp-validation-for="Input.Foto" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar trabajador</button>
+</form>

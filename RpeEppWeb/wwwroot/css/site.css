@@ -1,0 +1,29 @@
+:root {
+  --brand-bg: #e9f8ec;
+  --panel-bg: #ffffff;
+  --panel-border: #b7dfbf;
+}
+
+body {
+  background-color: var(--brand-bg);
+}
+
+.page-panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.worker-photo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 1px solid #ddd;
+}
+
+.table-docs td,
+.table-docs th {
+  vertical-align: middle;
+}
