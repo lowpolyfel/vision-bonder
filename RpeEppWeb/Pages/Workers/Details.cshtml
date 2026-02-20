@@ -12,7 +12,10 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="h3 mb-0">Vista de EPP</h1>
-    <a class="btn btn-outline-secondary" asp-page="/Index" asp-route-rpe="@Model.Worker.Rpe">Volver a búsqueda</a>
+    <div class="d-flex gap-2">
+        <a class="btn btn-success" asp-page-handler="DownloadAll" asp-route-id="@Model.Worker.Id">Descargar todo (ZIP)</a>
+        <a class="btn btn-outline-secondary" asp-page="/Index" asp-route-rpe="@Model.Worker.Rpe">Volver a búsqueda</a>
+    </div>
 </div>
 
 @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
@@ -80,6 +83,7 @@
                                                 @if (doc is not null)
                                                 {
                                                     <a class="btn btn-sm btn-outline-primary mb-1" href="@doc.FilePath" target="_blank">Ver PDF</a>
+                                                    <a class="btn btn-sm btn-outline-success mb-1" asp-page-handler="DownloadDocument" asp-route-id="@Model.Worker.Id" asp-route-tipo="@tipo">Descargar</a>
                                                     <form method="post" asp-page-handler="DeleteDocument" class="d-inline">
                                                         <input type="hidden" name="workerId" value="@Model.Worker.Id" />
                                                         <input type="hidden" name="tipo" value="@tipo" />

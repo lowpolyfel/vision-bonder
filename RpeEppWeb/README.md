@@ -70,3 +70,12 @@ Luego despliegas la carpeta `publish/` en IIS, Linux + systemd, Docker, etc.
 
 - `uploads/.gitkeep` está vacío **a propósito**. Git no guarda carpetas vacías; este archivo permite que la carpeta `uploads/` exista en el repo desde el inicio.
 - Para cambiar colores de la página, modifica `wwwroot/css/site.css` (variables en `:root`, por ejemplo `--brand-bg`).
+
+## 8) ¿Cómo descargar los archivos?
+
+1. Entra a **Buscar trabajador** y busca por RPE.
+2. Haz clic en **Ver y administrar**.
+3. En la tabla de documentos puedes:
+   - **Ver PDF**: abre el archivo en otra pestaña.
+   - **Descargar**: descarga ese PDF al equipo.
+   - **Descargar todo (ZIP)**: baja todos los PDFs cargados del trabajador en un solo archivo comprimido.
